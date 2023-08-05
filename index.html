@@ -14,10 +14,10 @@
     </style>
 </head>
 <body>
-    <textarea id="input" placeholder="原文"></textarea>
+    <textarea id="output" placeholder="原文"></textarea>
     <button onclick="encrypt()">加密</button>
     <button onclick="decrypt()">解密</button>
-    <textarea id="output" placeholder="加密"></textarea>
+    <textarea id="input" placeholder="密文"></textarea>
 
     <script>
         const obja = {
@@ -43,28 +43,41 @@
 
         function decrypt() {
             let input = document.getElementById('input').value;
-            let newStr = "magnet:?xt=urn:btih:";
-            for (let char of input) {
-                if (obja.hasOwnProperty(char)) {
-                    newStr += obja[char];
-                } else {
-                    newStr += char;
+            let lines = input.split('\n');
+            let newLines = lines.map(line => {
+                let newStr = "magnet:?xt=urn:btih:";
+                console.log(line)
+                for (let char of line) {
+                    if (obja.hasOwnProperty(char)) {
+                        newStr += obja[char];
+                    } else {
+                        newStr += char;
+                    }
                 }
-            }
-            document.getElementById('output').value = newStr;
+                return newStr;
+            });
+            console.log(newLines)
+            document.getElementById('output').value = newLines.join('\n');
         }
-
         function encrypt() {
             let input = document.getElementById('output').value;
-            let newStr = '';
-            for (let char of input) {
-                if (objb.hasOwnProperty(char)) {
-                    newStr += objb[char];
-                } else {
-                    newStr += char;
+            let lines = input.split('\n');
+            let newLines = lines.map(line => {
+                // 检查行是否以 "magnet:?xt=urn:btih:" 开头，如果是则去掉该部分
+                if (line.startsWith("magnet:?xt=urn:btih:")) {
+                    line = line.replace("magnet:?xt=urn:btih:", "");
                 }
-            }
-            document.getElementById('input').value = newStr;
+                let newStr = '';
+                for (let char of line) {
+                    if (objb.hasOwnProperty(char)) {
+                        newStr += objb[char];
+                    } else {
+                        newStr += char;
+                    }
+                }
+                return newStr;
+            });
+            document.getElementById('input').value = newLines.join('\n');
         }
     </script>
 </body>
