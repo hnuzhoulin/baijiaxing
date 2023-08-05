@@ -1,0 +1,24 @@
+{
+    "main": "index.html",
+    "logo": "logo.png",
+    "platform": ["win32", "darwin", "linux"],
+    "development": {
+      "main": ""
+    },
+    "pluginSetting": {
+      "single": true,
+      "height": 0
+    },
+    "features": [
+      {
+        "code": "百家姓解密",
+        "explain": "将百家姓进行解密",
+        "icon": "logo.png",
+        "platform": ["win32", "darwin", "linux"],
+        "cmds": [
+          "百家姓",
+          "中文"
+        ]
+      }
+    ]
+  }
